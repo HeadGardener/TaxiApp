@@ -19,25 +19,28 @@ var (
 
 type WalletStorage interface {
 	Create(ctx context.Context, wallet *models.Wallet) (string, error)
-	CreateFamilyWallet(ctx context.Context, userID string, wallet *models.FamilyWallet) (string, error)
 	GetByID(ctx context.Context, walletID string) (models.Wallet, error)
+	GetAllWallets(ctx context.Context, userID string) ([]models.Wallet, error)
+	GetBalance(ctx context.Context, walletType models.WalletType, walletID string) (float64, error)
+	Refill(ctx context.Context, transaction *models.Transaction) (int, error)
+
+	CreateFamilyWallet(ctx context.Context, userID string, wallet *models.FamilyWallet) (string, error)
 	GetFamilyWalletByID(ctx context.Context, walletID string) (models.FamilyWallet, error)
 	DeleteFamilyWallet(ctx context.Context, walletID string) error
 	SetFixedBalance(ctx context.Context, walletID string, fixedBalance float64) error
 	AddMember(ctx context.Context, walletID, memberID string) error
 	GetMembers(ctx context.Context, walletID string) ([]models.User, error)
 	DeleteMember(ctx context.Context, walletID, memberID string) error
-	GetAllWallets(ctx context.Context, userID string) ([]models.Wallet, error)
 	GetAllFamilyWalletsAsOwner(ctx context.Context, userID string) ([]models.FamilyWallet, error)
 	GetAllFamilyWalletsAsMember(ctx context.Context, userID string) ([]models.FamilyWallet, error)
+	RefillFamilyWallet(ctx context.Context, walletID, famWalletID string, amount float64) error
+
 	IsWalletOwner(ctx context.Context, walletID, userID string) error
 	IsFamilyWalletOwner(ctx context.Context, walletID, userID string) error
 	IsFamilyWalletMember(ctx context.Context, walletID, userID string) error
-	GetBalance(ctx context.Context, walletType models.WalletType, walletID string) (float64, error)
+
 	Withdraw(ctx context.Context, transactionID int, status string, walletType models.WalletType,
 		credentials models.Credentials) error
-	Refill(ctx context.Context, transaction *models.Transaction) (int, error)
-	RefillFamilyWallet(ctx context.Context, walletID, famWalletID string, amount float64) error
 }
 
 type UserProvider interface {
