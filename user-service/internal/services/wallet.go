@@ -13,7 +13,6 @@ var (
 	ErrAddedMember          = errors.New("member was already added")
 	ErrInvalidMember        = errors.New("this user is not the member")
 	ErrDeleteOwner          = errors.New("you can't delete your self, you are the owner")
-	ErrInvalidWalletType    = errors.New("invalid wallet type")
 	ErrNotConnectedToWallet = errors.New("you not the owner or member of this wallet")
 )
 
@@ -277,5 +276,5 @@ func (s *WalletService) PickWalletAndPay(ctx context.Context, userID string, wal
 		return s.walletStorage.Withdraw(ctx, transactionID, models.Blocked, walletType, credentials)
 	}
 
-	return ErrInvalidWalletType
+	return models.ErrInvalidWalletType
 }

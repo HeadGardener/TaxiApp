@@ -1,5 +1,11 @@
 package models
 
+import "errors"
+
+var (
+	ErrInvalidWalletType = errors.New("invalid wallet type")
+)
+
 type WalletType int
 
 const (

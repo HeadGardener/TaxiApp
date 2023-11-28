@@ -24,6 +24,10 @@ type ServerConfig struct {
 	Port string
 }
 
+type GRPCServerConfig struct {
+	Port string
+}
+
 type RedisConfig struct {
 	Addr     string
 	Password string

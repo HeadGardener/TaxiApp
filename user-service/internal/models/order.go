@@ -1,5 +1,9 @@
 package models
 
+var (
+	AcceptStatus = "ACCEPTED"
+)
+
 type Order struct {
 	TaxiType TaxiType `json:"taxi_type"`
 	From     string   `json:"from"`

@@ -59,7 +59,7 @@ func (s *TransactionService) ViewAll(ctx context.Context, userID, walletID strin
 		return s.transactionStorage.GetAll(ctx, walletID)
 	}
 
-	return nil, ErrInvalidWalletType
+	return nil, models.ErrInvalidWalletType
 }
 
 func (s *TransactionService) Confirm(ctx context.Context, walletType models.WalletType, transactionID int) error {
@@ -67,7 +67,7 @@ func (s *TransactionService) Confirm(ctx context.Context, walletType models.Wall
 		return s.transactionStorage.Confirm(ctx, transactionID, models.Success)
 	}
 
-	return ErrInvalidWalletType
+	return models.ErrInvalidWalletType
 }
 
 func (s *TransactionService) Cancel(ctx context.Context, walletType models.WalletType, transactionID int,
@@ -76,5 +76,5 @@ func (s *TransactionService) Cancel(ctx context.Context, walletType models.Walle
 		return s.transactionStorage.Cancel(ctx, transactionID, models.Canceled, walletType, credentials)
 	}
 
-	return ErrInvalidWalletType
+	return models.ErrInvalidWalletType
 }
