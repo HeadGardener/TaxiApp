@@ -69,7 +69,7 @@ func (s *IdentityService) SignIn(ctx context.Context, driverInput models.Driver)
 		return "", err
 	}
 
-	if err := s.tokenStorage.Add(ctx, driver.ID, token); err != nil {
+	if err = s.tokenStorage.Add(ctx, driver.ID, token); err != nil {
 		return "", err
 	}
 

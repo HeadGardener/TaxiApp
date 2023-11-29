@@ -12,19 +12,13 @@ type DriverStorage interface {
 	SetInactive(ctx context.Context, driverID string) error
 }
 
-type RatingCounter interface {
-	GetRating(ctx context.Context, driverID string) (float32, error)
-}
-
 type DriverService struct {
 	driverStorage DriverStorage
-	ratingCounter RatingCounter
 }
 
-func NewDriverService(driverStorage DriverStorage, ratingCounter RatingCounter) *DriverService {
+func NewDriverService(driverStorage DriverStorage) *DriverService {
 	return &DriverService{
 		driverStorage: driverStorage,
-		ratingCounter: ratingCounter,
 	}
 }
 
@@ -33,13 +27,6 @@ func (s *DriverService) GetProfile(ctx context.Context, driverID string) (*model
 	if err != nil {
 		return &models.Driver{}, err
 	}
-
-	rating, err := s.ratingCounter.GetRating(ctx, driverID)
-	if err != nil {
-		return &models.Driver{}, err
-	}
-
-	driver.Rating = rating
 
 	return driver, nil
 }

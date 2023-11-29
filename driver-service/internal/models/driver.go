@@ -49,7 +49,7 @@ func (ds DriverStatus) FromString(driverStatus string) DriverStatus {
 }
 
 type Driver struct {
-	ID           string       `db:"_id"`
+	ID           string       `db:"id"`
 	Name         string       `db:"name"`
 	Surname      string       `db:"surname"`
 	Phone        string       `db:"phone"`

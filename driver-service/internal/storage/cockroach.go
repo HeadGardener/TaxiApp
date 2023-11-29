@@ -1,18 +1,9 @@
 package storage
 
 import (
-	"github.com/HeadGardener/TaxiApp/user-service/internal/config"
+	"github.com/HeadGardener/TaxiApp/driver-service/internal/config"
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"github.com/jmoiron/sqlx"
-)
-
-const (
-	usersTable         = "users"
-	transactionsTable  = "transactions"
-	tripsTable         = "trips"
-	walletsTable       = "wallets"
-	familyWalletsTable = "family_wallets"
-	usersWalletsTable  = "users_wallets"
 )
 
 func NewDB(conf config.DBConfig) (*sqlx.DB, error) {
