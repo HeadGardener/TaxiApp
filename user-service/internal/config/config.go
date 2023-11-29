@@ -10,10 +10,10 @@ import (
 )
 
 type Config struct {
-	ServerConfig ServerConfig
-
-	DBConfig    DBConfig
-	RedisConfig RedisConfig
+	DBConfig         DBConfig
+	ServerConfig     ServerConfig
+	GRPCServerConfig GRPCServerConfig
+	RedisConfig      RedisConfig
 }
 
 type DBConfig struct {
@@ -40,14 +40,19 @@ func Init(path string) (*Config, error) {
 		return nil, fmt.Errorf("invalid path: %s", path)
 	}
 
+	dburl := os.Getenv("DB_URL")
+	if dburl == "" {
+		return nil, errors.New("db name is empty")
+	}
+
 	srvport := os.Getenv("SERVER_PORT")
 	if srvport == "" {
 		return nil, errors.New("server port is empty")
 	}
 
-	dburl := os.Getenv("DB_URL")
+	grpcport := os.Getenv("GRPC_PORT")
 	if dburl == "" {
-		return nil, errors.New("db name is empty")
+		return nil, errors.New("grpc port name is empty")
 	}
 
 	redisAddr := os.Getenv("REDIS_ADDR")
@@ -68,6 +73,9 @@ func Init(path string) (*Config, error) {
 		},
 		ServerConfig: ServerConfig{
 			Port: srvport,
+		},
+		GRPCServerConfig: GRPCServerConfig{
+			Port: grpcport,
 		},
 		RedisConfig: RedisConfig{
 			Addr:     redisAddr,
