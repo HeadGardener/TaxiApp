@@ -25,11 +25,6 @@ func (h *Handler) profile(w http.ResponseWriter, r *http.Request) {
 
 	profile, err := h.userService.GetProfile(r.Context(), userID)
 	if err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while getting profile", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while getting profile", err)
 		return
 	}
@@ -64,11 +59,6 @@ func (h *Handler) updateProfile(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err = h.userService.Update(r.Context(), userID, user); err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while updating profile", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while updating profile", err)
 		return
 	}
@@ -86,11 +76,6 @@ func (h *Handler) setInactive(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err = h.userService.SetInactive(r.Context(), userID); err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while setting inactive", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while setting inactive", err)
 		return
 	}

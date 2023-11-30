@@ -41,11 +41,6 @@ func (h *Handler) createWallet(w http.ResponseWriter, r *http.Request) {
 
 	id, err := h.walletService.Create(r.Context(), userID, req.Card)
 	if err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while creating wallet", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while creating wallet", err)
 		return
 	}
@@ -70,11 +65,6 @@ func (h *Handler) viewWallet(w http.ResponseWriter, r *http.Request) {
 
 	wallet, err := h.walletService.GetByID(r.Context(), userID, walletID)
 	if err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while getting wallet", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while getting wallet", err)
 		return
 	}
@@ -91,11 +81,6 @@ func (h *Handler) viewWallets(w http.ResponseWriter, r *http.Request) {
 
 	wallets, err := h.walletService.ViewAll(r.Context(), userID)
 	if err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while getting wallets", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while getting wallets", err)
 		return
 	}
@@ -124,11 +109,6 @@ func (h *Handler) topUp(w http.ResponseWriter, r *http.Request) {
 
 	id, err := h.walletService.TopUp(r.Context(), userID, walletID, money)
 	if err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while refilling balance", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while refilling balance", err)
 		return
 	}
@@ -156,11 +136,6 @@ func (h *Handler) createFamilyWallet(w http.ResponseWriter, r *http.Request) {
 
 	id, err := h.walletService.CreateFamilyWallet(r.Context(), userID, walletID)
 	if err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while creating family wallet", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while creating family wallet", err)
 		return
 	}
@@ -185,11 +160,6 @@ func (h *Handler) viewFamilyWallet(w http.ResponseWriter, r *http.Request) {
 
 	wallet, err := h.walletService.GetFamilyWalletByID(r.Context(), userID, walletID)
 	if err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while getting family wallet", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while getting family wallet", err)
 		return
 	}
@@ -206,11 +176,6 @@ func (h *Handler) viewFamilyWallets(w http.ResponseWriter, r *http.Request) {
 
 	wallets, err := h.walletService.ViewAllFamily(r.Context(), userID)
 	if err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while getting wallets", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while getting wallets", err)
 		return
 	}
@@ -227,11 +192,6 @@ func (h *Handler) viewMemberships(w http.ResponseWriter, r *http.Request) {
 
 	wallets, err := h.walletService.ViewMemberships(r.Context(), userID)
 	if err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while getting memberships", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while getting memberships", err)
 		return
 	}
@@ -253,17 +213,12 @@ func (h *Handler) deleteFamilyWallet(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err = h.walletService.DeleteFamilyWallet(r.Context(), userID, walletID); err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while deleting family wallet", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while deleting family wallet", err)
 		return
 	}
 
 	newResponse(w, http.StatusOK, map[string]any{
-		"msg": "deleted",
+		"status": "deleted",
 	})
 }
 
@@ -293,11 +248,6 @@ func (h *Handler) topUpFamily(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err = h.walletService.AddFamilyBalance(r.Context(), userID, walletID, famWalletID, money); err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while refilling balance", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while refilling balance", err)
 		return
 	}
@@ -327,17 +277,12 @@ func (h *Handler) setFixedBalance(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err = h.walletService.SetFixedBalance(r.Context(), userID, walletID, money); err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while setting fixed balance", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while setting fixed balance", err)
 		return
 	}
 
 	newResponse(w, http.StatusOK, map[string]any{
-		"msg": "set",
+		"status": "set",
 	})
 }
 
@@ -361,17 +306,12 @@ func (h *Handler) addMember(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err = h.walletService.AddMember(r.Context(), userID, walletID, phone); err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while adding member", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while adding member", err)
 		return
 	}
 
 	newResponse(w, http.StatusCreated, map[string]any{
-		"msg": "added",
+		"status": "added",
 	})
 }
 
@@ -391,11 +331,6 @@ func (h *Handler) viewMembers(w http.ResponseWriter, r *http.Request) {
 
 	members, err := h.walletService.ViewMembers(r.Context(), userID, walletID)
 	if err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while getting members", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while getting members", err)
 		return
 	}
@@ -425,17 +360,12 @@ func (h *Handler) deleteMember(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err = h.walletService.DeleteMember(r.Context(), userID, walletID, phone); err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while deleting member", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while deleting member", err)
 		return
 	}
 
 	newResponse(w, http.StatusCreated, map[string]any{
-		"msg": "deleted",
+		"status": "deleted",
 	})
 }
 
@@ -483,11 +413,6 @@ func (h *Handler) pay(w http.ResponseWriter, r *http.Request) {
 		models.WalletTypesStr[walletType],
 		transactionID,
 		credentials); err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while paying", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while paying", err)
 		return
 	}

@@ -25,7 +25,7 @@ func (s *DriverStorage) Create(ctx context.Context, driver *models.Driver) (stri
 		driver.Email,
 		driver.TaxiType,
 		driver.Balance,
-		driver.PasswordHash,
+		driver.Password,
 		driver.Rating,
 		driver.DriverStatus,
 		driver.Registration,

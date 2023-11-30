@@ -1,7 +1,9 @@
 package models
 
 var (
-	AcceptStatus = "ACCEPTED"
+	AcceptStatus   = "ACCEPTED"
+	ProcessStatus  = "PROCESSING"
+	ConsumedStatus = "CONSUMED"
 )
 
 type Order struct {

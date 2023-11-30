@@ -46,7 +46,7 @@ CREATE TABLE trips
     id        uuid PRIMARY KEY,
     user_id   uuid REFERENCES users (id) ON DELETE CASCADE NOT NULL,
     taxi_type taxiType                                     NOT NULL,
-    driver    VARCHAR(255)                                 NOT NULL,
+    driver_id uuid                                         NOT NULL,
     "from"    VARCHAR(255)                                 NOT NULL,
     "to"      VARCHAR(255)                                 NOT NULL,
     rating    float                                        NOT NULL CHECK ( rating >= 0.0 AND rating <= 5.0),

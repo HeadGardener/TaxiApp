@@ -21,6 +21,15 @@ func NewOrderStorage() *OrderStorage {
 	}
 }
 
+func (s *OrderStorage) Save(orderID string, order *models.UserOrder) error {
+	s.mu.Unlock()
+	defer s.mu.Unlock()
+
+	s.orders[orderID] = order
+
+	return nil
+}
+
 func (s *OrderStorage) Get(orderID string) (*models.UserOrder, error) {
 	s.mu.Unlock()
 	defer s.mu.Unlock()

@@ -38,20 +38,20 @@ func NewIdentityService(driverProcessor DriverProcessor, tokenStorage TokenStora
 	}
 }
 
-func (s *IdentityService) SignUp(ctx context.Context, driver models.Driver) (string, error) {
+func (s *IdentityService) SignUp(ctx context.Context, driver *models.Driver) (string, error) {
 	driver.ID = uuid.NewString()
 	driver.Balance = 0.0
-	driver.PasswordHash = hash.GetPasswordHash(driver.PasswordHash)
+	driver.Password = hash.GetPasswordHash(driver.Password)
 	driver.Rating = 0.0
 	driver.DriverStatus = models.Disable
 	driver.Registration = time.Now()
 	driver.IsActive = true
 
-	return s.driverProcessor.Create(ctx, &driver)
+	return s.driverProcessor.Create(ctx, driver)
 }
 
-func (s *IdentityService) SignIn(ctx context.Context, driverInput models.Driver) (string, error) {
-	driver, err := s.driverProcessor.GetByPhone(ctx, driverInput.Phone)
+func (s *IdentityService) SignIn(ctx context.Context, phone, password string) (string, error) {
+	driver, err := s.driverProcessor.GetByPhone(ctx, phone)
 	if err != nil {
 		return "", err
 	}
@@ -60,7 +60,7 @@ func (s *IdentityService) SignIn(ctx context.Context, driverInput models.Driver)
 		return "", ErrNotActive
 	}
 
-	if !hash.CheckPassword([]byte(driver.PasswordHash), driverInput.PasswordHash) {
+	if !hash.CheckPassword([]byte(driver.Password), password) {
 		return "", ErrInvalidPassword
 	}
 
