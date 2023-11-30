@@ -1,9 +1,12 @@
 package models
 
 import (
+	"errors"
 	"fmt"
 	"time"
 )
+
+var ErrInvalidTaxiType = errors.New("invalid taxi type")
 
 type TaxiType int
 
@@ -49,10 +52,10 @@ func (tt TaxiType) FromString(taxiType string) TaxiType {
 }
 
 type Trip struct {
-	DriverID string    `db:"driver_id"`
-	UserID   string    `db:"user_id"`
-	From     string    `db:"from"`
-	To       string    `db:"to"`
-	Rating   float32   `db:"rating"`
-	Date     time.Time `db:"date"`
+	ID     string    `db:"id"`
+	UserID string    `db:"user_id"`
+	From   string    `db:"from"`
+	To     string    `db:"to"`
+	Rating float32   `db:"rating"`
+	Date   time.Time `db:"date"`
 }

@@ -4,9 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"errors"
-	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
-	services "github.com/HeadGardener/TaxiApp/user-service/internal/services"
-	"github.com/HeadGardener/TaxiApp/user-service/internal/storage"
+	"github.com/HeadGardener/TaxiApp/driver-service/internal/services"
 	"log"
 	"net/http"
 )
@@ -46,22 +44,6 @@ func errIsCustom(err error) bool {
 		return true
 	}
 
-	if errors.Is(err, models.ErrInvalidWalletType) {
-		return true
-	}
-
-	if errors.Is(err, services.ErrDeleteOwner) {
-		return true
-	}
-
-	if errors.Is(err, services.ErrAddedMember) {
-		return true
-	}
-
-	if errors.Is(err, services.ErrInvalidMember) {
-		return true
-	}
-
 	if errors.Is(err, services.ErrNotActive) {
 		return true
 	}
@@ -70,22 +52,7 @@ func errIsCustom(err error) bool {
 		return true
 	}
 
-	if errors.Is(err, storage.ErrNotMember) {
-		return true
-	}
-
-	if errors.Is(err, services.ErrNotConnectedToWallet) {
-		return true
-	}
-
 	if errors.Is(err, ErrNotUserAttributes) {
-		return true
-	}
-
-	if errors.Is(err, storage.ErrOrderNotExist) {
-		return true
-	}
-	if errors.Is(err, services.ErrNotYourOrder) {
 		return true
 	}
 

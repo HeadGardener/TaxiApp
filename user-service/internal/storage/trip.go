@@ -33,7 +33,7 @@ func (s *TripStorage) Save(ctx context.Context, userID string, trip *models.Trip
 }
 
 func (s *TripStorage) GetAll(ctx context.Context, userID string) ([]models.Trip, error) {
-	var getAllTripsQuery = fmt.Sprintf(`SELECT (taxi_type, driver, "from", "to", rating, date) FROM %s 
+	var getAllTripsQuery = fmt.Sprintf(`SELECT (taxi_type, driver_id, "from", "to", rating, date) FROM %s 
                                         WHERE user_id=$1`, tripsTable)
 
 	var trips []models.Trip
