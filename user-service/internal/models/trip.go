@@ -49,13 +49,13 @@ func (tt TaxiType) FromString(taxiType string) TaxiType {
 }
 
 type Trip struct {
-	ID       string    `json:"id" db:"taxi_type"`
-	TaxiType TaxiType  `json:"taxi_type" db:"taxi_type"`
-	Driver   string    `json:"driver" db:"driver"` // placeholder
-	From     string    `json:"from" db:"from"`
-	To       string    `json:"to" db:"to"`
-	Rating   float32   `json:"rating" db:"rating"` // placeholder
-	Date     time.Time `json:"date" db:"date"`
+	ID       string    `db:"id"`
+	TaxiType TaxiType  `db:"taxi_type"`
+	DriverID string    `db:"driver_id"` // placeholder
+	From     string    `db:"from"`
+	To       string    `db:"to"`
+	Rating   float32   `db:"rating"` // placeholder
+	Date     time.Time `db:"date"`
 }
 
 func (t *Trip) Validate() error {

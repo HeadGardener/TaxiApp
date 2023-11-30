@@ -18,17 +18,17 @@ type response struct {
 
 func newErrResponse(w http.ResponseWriter, code int, msg string, err error) {
 	log.Printf("[ERROR] %s: %s", msg, err.Error())
-	if code < http.StatusInternalServerError {
+	if !errIsCustom(err) && code >= http.StatusInternalServerError {
 		newResponse(w, code, response{
 			Msg:   msg,
-			Error: err.Error(),
+			Error: "unexpected error",
 		})
 		return
 	}
 
 	newResponse(w, code, response{
 		Msg:   msg,
-		Error: "unexpected error",
+		Error: err.Error(),
 	})
 }
 

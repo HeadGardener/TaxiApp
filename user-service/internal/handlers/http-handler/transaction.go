@@ -39,11 +39,6 @@ func (h *Handler) viewTransactions(w http.ResponseWriter, r *http.Request) {
 
 	transactions, err := h.transactionService.ViewAll(r.Context(), userID, walletID, models.WalletTypesStr[walletType])
 	if err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while getting transactions", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while getting transactions", err)
 		return
 	}
@@ -72,11 +67,6 @@ func (h *Handler) processTransaction(w http.ResponseWriter, r *http.Request) {
 		if err = h.transactionService.Confirm(r.Context(),
 			models.WalletTypesStr[walletType],
 			transactionID); err != nil {
-			if errIsCustom(err) {
-				newErrResponse(w, http.StatusBadRequest, "failed while confirming transaction", err)
-				return
-			}
-
 			newErrResponse(w, http.StatusInternalServerError, "failed while confirming transaction", err)
 			return
 		}
@@ -102,11 +92,6 @@ func (h *Handler) processTransaction(w http.ResponseWriter, r *http.Request) {
 		if err = h.transactionService.Cancel(r.Context(),
 			models.WalletTypesStr[walletType],
 			transactionID, credentials); err != nil {
-			if errIsCustom(err) {
-				newErrResponse(w, http.StatusBadRequest, "failed while canceling transaction", err)
-				return
-			}
-
 			newErrResponse(w, http.StatusInternalServerError, "failed while canceling transaction", err)
 			return
 		}
@@ -118,7 +103,7 @@ func (h *Handler) processTransaction(w http.ResponseWriter, r *http.Request) {
 	}
 
 	newResponse(w, http.StatusOK, map[string]any{
-		"Msg": "processed",
+		"status": "processed",
 	})
 }
 

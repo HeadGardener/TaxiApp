@@ -18,7 +18,7 @@ const (
 	walletTypeQuery        = "wallet_type"
 	moneyQuery             = "money"
 	transactionStatusQuery = "status"
-	orderIDQuery           = "order_id"
+	orderIDParam           = "order_id"
 )
 
 const (
@@ -73,7 +73,7 @@ type TripService interface {
 type OrderService interface {
 	SendOrder(ctx context.Context, userID string, order *models.Order) (string, error)
 	SendComment(ctx context.Context, orderID, comment string) error
-	Get(orderID, userID string) (models.UserOrder, error)
+	Get(orderID, userID string) (*models.UserOrder, error)
 	Delete(orderID, userID string) error
 }
 
@@ -175,7 +175,7 @@ func (h *Handler) InitRoutes() http.Handler {
 			r.Get("/", h.viewTrips)
 			r.Post("/", h.sendOrder)
 			r.Post("/comment", h.sendComment)
-			r.Get("/orders", h.awaitingOrders)
+			r.Get("/{order_id}", h.awaitingOrders)
 		})
 	})
 

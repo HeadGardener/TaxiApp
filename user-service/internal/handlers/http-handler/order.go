@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
+	"github.com/go-chi/chi/v5"
 	"log"
 	"net/http"
 )
@@ -49,22 +50,12 @@ func (h *Handler) sendOrder(w http.ResponseWriter, r *http.Request) {
 
 	orderID, err := h.orderService.SendOrder(r.Context(), userID, order)
 	if err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while sending order", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while sending order", err)
 		return
 	}
 
 	transactionID, err := h.transactionService.Create(r.Context(), moneyPlaceholder)
 	if err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while preparing transaction", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while preparing transaction", err)
 		return
 	}
@@ -84,11 +75,6 @@ func (h *Handler) sendComment(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := h.orderService.SendComment(r.Context(), commentReq.OrderID, commentReq.Comment); err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while sending comment", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while sending comment", err)
 		return
 	}
@@ -106,27 +92,24 @@ func (h *Handler) awaitingOrders(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	orderID := r.URL.Query().Get(orderIDQuery)
+	orderID := chi.URLParam(r, orderIDParam)
 
 	order, err := h.orderService.Get(orderID, userID)
 	if err != nil {
-		if errIsCustom(err) {
-			newErrResponse(w, http.StatusBadRequest, "failed while getting order", err)
-			return
-		}
-
 		newErrResponse(w, http.StatusInternalServerError, "failed while getting order", err)
 	}
 
-	if order.Status != models.AcceptStatus {
+	newResponse(w, http.StatusOK, order)
+
+	if order.Status != models.AcceptStatus && order.Status != models.ConsumedStatus {
 		if err = h.orderService.Delete(orderID, userID); err != nil {
 			log.Printf("[ERROR] failed while deleting order: %s", err.Error())
 		}
 	}
 }
 
-func (o *sendOrderReq) validate() error {
-	if _, ok := models.TaxiTypes[o.TaxiType]; !ok {
+func (r *sendOrderReq) validate() error {
+	if _, ok := models.TaxiTypes[r.TaxiType]; !ok {
 		return errors.New("invalid taxi type: only economy, comfort and business are available")
 	}
 

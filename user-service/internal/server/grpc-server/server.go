@@ -3,7 +3,7 @@ package grpc_server
 import (
 	"fmt"
 	"github.com/HeadGardener/TaxiApp/user-service/internal/config"
-	user_service "github.com/HeadGardener/protos/gen"
+	user_service "github.com/HeadGardener/protos/gen/user"
 	"google.golang.org/grpc"
 	"net"
 )
@@ -18,10 +18,6 @@ func (s *GRPCServer) Init(conf config.GRPCServerConfig, handler user_service.Use
 
 	grpcServer := grpc.NewServer()
 	user_service.RegisterUserServiceServer(grpcServer, handler)
-	err = grpcServer.Serve(lis)
-	if err != nil {
-		return fmt.Errorf("failed to start grpc server: %e", err)
-	}
 
-	return nil
+	return grpcServer.Serve(lis)
 }

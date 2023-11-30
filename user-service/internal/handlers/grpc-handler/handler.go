@@ -1,9 +1,12 @@
 package grpc_handler
 
-import user_service "github.com/HeadGardener/protos/gen"
+import (
+	"context"
+	user_service "github.com/HeadGardener/protos/gen/user"
+)
 
 type OrderService interface {
-	Update(orderID, userID, status string) error
+	Update(ctx context.Context, orderID, userID, driverID, status string) error
 	Delete(orderID, userID string) error
 }
 
