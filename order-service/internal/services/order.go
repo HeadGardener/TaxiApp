@@ -17,8 +17,8 @@ type UserServiceGRPCClient interface {
 }
 
 type OrderStorage interface {
-	GetByID(ctx context.Context, orderID string) (models.Order, error)
 	Save(ctx context.Context, order models.Order) (string, error)
+	GetByID(ctx context.Context, orderID string) (models.Order, error)
 	AddComment(ctx context.Context, orderID, comment string) error
 	UpdateStatus(ctx context.Context, orderID, status string) error
 	UpdateRating(ctx context.Context, orderID string, rating float64) error
