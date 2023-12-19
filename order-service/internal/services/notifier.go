@@ -27,7 +27,8 @@ type OrderNotifier struct {
 	driversQueues *models.DriversQueues
 }
 
-func NewOrderNotifier(client DriverServiceGRPCClient, usersQueues *models.UsersQueues, driversQueues *models.DriversQueues) *OrderNotifier {
+func NewOrderNotifier(client DriverServiceGRPCClient,
+	usersQueues *models.UsersQueues, driversQueues *models.DriversQueues) *OrderNotifier {
 	return &OrderNotifier{
 		client:        client,
 		usersQueues:   usersQueues,
@@ -35,7 +36,8 @@ func NewOrderNotifier(client DriverServiceGRPCClient, usersQueues *models.UsersQ
 	}
 }
 
-func (n *OrderNotifier) AddUserToQueue(ctx context.Context, userID, orderID, from, to string, taxiType models.TaxiType) error {
+func (n *OrderNotifier) AddUserToQueue(ctx context.Context,
+	userID, orderID, from, to string, taxiType models.TaxiType) error {
 	var err error
 
 	go func() {
