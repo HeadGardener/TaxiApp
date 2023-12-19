@@ -6,7 +6,7 @@ import (
 	driver_service "github.com/HeadGardener/protos/gen/driver"
 )
 
-func (h *ProcessOrderHandler) AcceptOrder(_ context.Context,
+func (h *ProcessOrderHandler) ConsumeOrder(_ context.Context,
 	req *driver_service.ConsumeOrderRequest) (*driver_service.ConsumeOrderResponse, error) {
 	order := models.Order{
 		ID:       req.OrderID,
