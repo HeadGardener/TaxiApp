@@ -2,9 +2,10 @@ package http_server
 
 import (
 	"context"
-	"github.com/HeadGardener/TaxiApp/driver-service/internal/config"
 	"net/http"
 	"time"
+
+	"github.com/HeadGardener/TaxiApp/driver-service/internal/config"
 )
 
 type Server struct {

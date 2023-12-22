@@ -2,8 +2,13 @@ package storage
 
 import (
 	"errors"
-	"github.com/HeadGardener/TaxiApp/driver-service/internal/models"
 	"sync"
+
+	"github.com/HeadGardener/TaxiApp/driver-service/internal/models"
+)
+
+const (
+	orderStorageStartSize = 100
 )
 
 var (
@@ -17,15 +22,15 @@ type OrderStorage struct {
 
 func NewOrderStorage() *OrderStorage {
 	return &OrderStorage{
-		orders: make(map[string]models.Order, 100),
+		orders: make(map[string]models.Order, orderStorageStartSize),
 	}
 }
 
-func (s *OrderStorage) Add(order models.Order) error {
+func (s *OrderStorage) Add(order *models.Order) error {
 	s.mu.Unlock()
 	defer s.mu.Unlock()
 
-	s.orders[order.ID] = order
+	s.orders[order.ID] = *order
 
 	return nil
 }

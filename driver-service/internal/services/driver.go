@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"errors"
+
 	"github.com/HeadGardener/TaxiApp/driver-service/internal/models"
 )
 
@@ -10,7 +11,7 @@ var ErrInvalidDriverStatus = errors.New("invalid driver status")
 
 type DriverStorage interface {
 	GetByID(ctx context.Context, driverID string) (*models.Driver, error)
-	Update(ctx context.Context, driverID string, driverUpdate models.Driver) error
+	Update(ctx context.Context, driverID string, driverUpdate *models.Driver) error
 	ChangeStatus(ctx context.Context, driverID string, status models.DriverStatus) error
 	SetInactive(ctx context.Context, driverID string) error
 }
@@ -36,7 +37,7 @@ func (s *DriverService) GetProfile(ctx context.Context, driverID string) (*model
 	return driver, nil
 }
 
-func (s *DriverService) Update(ctx context.Context, driverID string, driverUpdate models.Driver) error {
+func (s *DriverService) Update(ctx context.Context, driverID string, driverUpdate *models.Driver) error {
 	driver, err := s.driverStorage.GetByID(ctx, driverID)
 	if err != nil {
 		return err
@@ -58,10 +59,10 @@ func (s *DriverService) Update(ctx context.Context, driverID string, driverUpdat
 		driver.Email = driverUpdate.Email
 	}
 
-	return s.driverStorage.Update(ctx, driverID, *driver)
+	return s.driverStorage.Update(ctx, driverID, driver)
 }
 
-func (s *DriverService) ChangeStatus(ctx context.Context, driverID string, status string) error {
+func (s *DriverService) ChangeStatus(ctx context.Context, driverID, status string) error {
 	st, ok := models.DriverStatusesStr[status]
 	if !ok {
 		return ErrInvalidDriverStatus

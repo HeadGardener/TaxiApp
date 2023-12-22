@@ -4,9 +4,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/HeadGardener/TaxiApp/driver-service/internal/models"
 	"net/http"
 	"net/mail"
+
+	"github.com/HeadGardener/TaxiApp/driver-service/internal/models"
 )
 
 type updateReq struct {
@@ -51,7 +52,7 @@ func (h *Handler) updateProfile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	driverUpdate := models.Driver{
+	driverUpdate := &models.Driver{
 		Name:    req.Name,
 		Surname: req.Surname,
 		Email:   req.Email,

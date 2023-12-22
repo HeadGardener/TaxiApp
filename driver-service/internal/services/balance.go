@@ -3,8 +3,9 @@ package services
 import (
 	"context"
 	"errors"
+	"log"
+
 	"github.com/HeadGardener/TaxiApp/driver-service/internal/models"
-	"log/slog"
 )
 
 var (
@@ -52,7 +53,7 @@ func (s *BalanceService) CashOut(ctx context.Context, driverID string, credentia
 		return err
 	}
 
-	slog.Info("send %f on card %s", credentials.Money, credentials.Card)
+	log.Printf("send %f on card %s", credentials.Money, credentials.Card)
 
 	return nil
 }

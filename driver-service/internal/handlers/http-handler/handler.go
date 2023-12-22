@@ -2,11 +2,12 @@ package http_handler
 
 import (
 	"context"
+	"net/http"
+	"time"
+
 	"github.com/HeadGardener/TaxiApp/driver-service/internal/models"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"net/http"
-	"time"
 )
 
 const (
@@ -27,7 +28,7 @@ type IdentityService interface {
 
 type DriverService interface {
 	GetProfile(ctx context.Context, driverID string) (*models.Driver, error)
-	Update(ctx context.Context, driverID string, driverUpdate models.Driver) error
+	Update(ctx context.Context, driverID string, driverUpdate *models.Driver) error
 	ChangeStatus(ctx context.Context, driverID string, status string) error
 	SetInactive(ctx context.Context, driverID string) error
 }

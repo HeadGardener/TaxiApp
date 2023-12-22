@@ -2,6 +2,7 @@ package storage
 
 import (
 	"context"
+
 	"github.com/HeadGardener/TaxiApp/driver-service/internal/models"
 	"github.com/jmoiron/sqlx"
 )
@@ -56,7 +57,7 @@ func (s *DriverStorage) GetByID(ctx context.Context, driverID string) (*models.D
 	return &driver, nil
 }
 
-func (s *DriverStorage) Update(ctx context.Context, driverID string, driverUpdate models.Driver) error {
+func (s *DriverStorage) Update(ctx context.Context, driverID string, driverUpdate *models.Driver) error {
 	if _, err := s.db.ExecContext(ctx,
 		`UPDATE drivers SET name=$1, surname=$2, phone=$3, email=$4 WHERE id=$5`,
 		driverUpdate.Name,

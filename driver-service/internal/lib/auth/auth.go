@@ -2,9 +2,10 @@ package auth
 
 import (
 	"errors"
+	"time"
+
 	"github.com/HeadGardener/TaxiApp/driver-service/internal/models"
 	"github.com/golang-jwt/jwt/v5"
-	"time"
 )
 
 const (

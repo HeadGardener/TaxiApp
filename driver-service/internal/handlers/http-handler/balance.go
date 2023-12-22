@@ -3,10 +3,11 @@ package http_handler
 import (
 	"encoding/json"
 	"errors"
-	"github.com/HeadGardener/TaxiApp/driver-service/internal/models"
 	"net/http"
 	"regexp"
 	"strconv"
+
+	"github.com/HeadGardener/TaxiApp/driver-service/internal/models"
 )
 
 var checkCard = regexp.MustCompile(`^\d{4}-\d{4}-\d{4}-\d{4}$`)

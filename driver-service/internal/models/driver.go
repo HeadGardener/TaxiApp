@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"time"
 )
 
@@ -37,14 +36,14 @@ var DriverStatusesStr = map[string]DriverStatus{
 
 func (ds DriverStatus) String() string {
 	switch ds {
-	case 0:
+	case Busy:
 		return busyStr
-	case 1:
+	case Free:
 		return freeStr
-	case 2:
+	case Disable:
 		return disableStr
 	default:
-		return fmt.Sprintf("undefined")
+		return "undefined"
 	}
 }
 

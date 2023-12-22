@@ -2,7 +2,6 @@ package models
 
 import (
 	"errors"
-	"fmt"
 	"time"
 )
 
@@ -36,14 +35,14 @@ var TaxiTypesStr = map[string]TaxiType{
 
 func (tt TaxiType) String() string {
 	switch tt {
-	case 0:
+	case economy:
 		return economyStr
-	case 1:
+	case comfort:
 		return comfortStr
-	case 2:
+	case business:
 		return businessStr
 	default:
-		return fmt.Sprintf("undefined")
+		return "undefined"
 	}
 }
 

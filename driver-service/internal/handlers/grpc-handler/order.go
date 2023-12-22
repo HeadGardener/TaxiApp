@@ -2,6 +2,7 @@ package grpc_handler
 
 import (
 	"context"
+
 	"github.com/HeadGardener/TaxiApp/driver-service/internal/models"
 	driver_service "github.com/HeadGardener/protos/gen/driver"
 )

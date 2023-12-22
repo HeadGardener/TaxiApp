@@ -2,8 +2,9 @@ package services
 
 import (
 	"context"
-	"github.com/HeadGardener/TaxiApp/driver-service/internal/models"
 	"time"
+
+	"github.com/HeadGardener/TaxiApp/driver-service/internal/models"
 )
 
 const (
@@ -17,7 +18,7 @@ type GRPCClient interface {
 }
 
 type OrderStorage interface {
-	Add(order models.Order) error
+	Add(order *models.Order) error
 	GetByDriverID(driverID string) (models.Order, error)
 	Delete(driverID string) error
 }
@@ -34,7 +35,7 @@ func NewOrderService(client GRPCClient, orderStorage OrderStorage) *OrderService
 	}
 }
 
-func (s *OrderService) Add(order models.Order) error {
+func (s *OrderService) Add(order *models.Order) error {
 	return s.orderStorage.Add(order)
 }
 

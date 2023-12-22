@@ -5,10 +5,10 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-func NewRedisDB(config config.RedisConfig) *redis.Client {
+func NewRedisDB(conf config.RedisConfig) *redis.Client {
 	return redis.NewClient(&redis.Options{
-		Addr:     config.Addr,
-		Password: config.Password,
-		DB:       config.DB,
+		Addr:     conf.Addr,
+		Password: conf.Password,
+		DB:       conf.DB,
 	})
 }

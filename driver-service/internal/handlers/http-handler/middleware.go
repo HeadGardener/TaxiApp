@@ -4,10 +4,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/HeadGardener/TaxiApp/driver-service/internal/lib/auth"
-	"github.com/HeadGardener/TaxiApp/driver-service/internal/models"
 	"net/http"
 	"strings"
+
+	"github.com/HeadGardener/TaxiApp/driver-service/internal/lib/auth"
+	"github.com/HeadGardener/TaxiApp/driver-service/internal/models"
 )
 
 type DriverCtx string

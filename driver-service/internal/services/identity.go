@@ -3,11 +3,12 @@ package services
 import (
 	"context"
 	"errors"
+	"time"
+
 	"github.com/HeadGardener/TaxiApp/driver-service/internal/lib/auth"
 	"github.com/HeadGardener/TaxiApp/driver-service/internal/lib/hash"
 	"github.com/HeadGardener/TaxiApp/driver-service/internal/models"
 	"github.com/google/uuid"
-	"time"
 )
 
 var (
