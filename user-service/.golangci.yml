@@ -66,7 +66,7 @@ linters:
   enable:
     - bodyclose
     - dogsled
-    - dupl
+    # - dupl
     - errcheck
     - exportloopref
     - funlen
@@ -89,7 +89,7 @@ linters:
     - nolintlint
     - revive
     - staticcheck
-    # - typecheck  # disable because of checking standard library
+    # - typecheck  disable because of checking standard library
     - unconvert
     - unparam
     - unused

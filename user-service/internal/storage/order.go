@@ -7,6 +7,10 @@ import (
 	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
 )
 
+const (
+	orderStorageStartSize = 100
+)
+
 var (
 	ErrOrderNotExist = errors.New("order don't exist")
 )
@@ -18,7 +22,7 @@ type OrderStorage struct {
 
 func NewOrderStorage() *OrderStorage {
 	return &OrderStorage{
-		orders: make(map[string]*models.UserOrder, 100),
+		orders: make(map[string]*models.UserOrder, orderStorageStartSize),
 	}
 }
 

@@ -121,7 +121,6 @@ func (h *Handler) topUp(w http.ResponseWriter, r *http.Request) {
 
 // family route
 
-//nolint:dupl
 func (h *Handler) createFamilyWallet(w http.ResponseWriter, r *http.Request) {
 	userID, err := getUserID(r)
 	if err != nil {
@@ -316,7 +315,6 @@ func (h *Handler) addMember(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-//nolint:dupl
 func (h *Handler) viewMembers(w http.ResponseWriter, r *http.Request) {
 	userID, err := getUserID(r)
 	if err != nil {

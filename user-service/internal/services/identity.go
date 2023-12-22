@@ -40,13 +40,11 @@ func NewIdentityService(userProcessor UserProcessor, tokenStorage TokenStorage) 
 }
 
 func (s *IdentityService) SignUp(ctx context.Context, user *models.User) (string, error) {
-	{
-		user.ID = uuid.NewString()
-		user.Password = hash.GetPasswordHash(user.Password)
-		user.Rating = 0.0
-		user.Registration = time.Now()
-		user.IsActive = true
-	}
+	user.ID = uuid.NewString()
+	user.Password = hash.GetPasswordHash(user.Password)
+	user.Rating = 0.0
+	user.Registration = time.Now()
+	user.IsActive = true
 
 	return s.userProcessor.Create(ctx, user)
 }
