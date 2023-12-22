@@ -2,6 +2,7 @@ package storage
 
 import (
 	"context"
+
 	"github.com/HeadGardener/TaxiApp/order-service/internal/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -11,7 +12,7 @@ type OrderStorage struct {
 	coll *mongo.Collection
 }
 
-func (s *OrderStorage) Save(ctx context.Context, order models.Order) (string, error) {
+func (s *OrderStorage) Save(ctx context.Context, order *models.Order) (string, error) {
 	_, err := s.coll.InsertOne(ctx, order)
 	if err != nil {
 		return "", err

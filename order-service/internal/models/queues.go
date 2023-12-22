@@ -1,5 +1,9 @@
 package models
 
+const (
+	queuesStartSize = 100
+)
+
 type OrderInfo struct {
 	UserID  string
 	OrderID string
@@ -15,9 +19,9 @@ type UsersQueues struct {
 
 func NewUsersQueues() *UsersQueues {
 	return &UsersQueues{
-		Economy:  make(chan OrderInfo, 100),
-		Comfort:  make(chan OrderInfo, 100),
-		Business: make(chan OrderInfo, 100),
+		Economy:  make(chan OrderInfo, queuesStartSize),
+		Comfort:  make(chan OrderInfo, queuesStartSize),
+		Business: make(chan OrderInfo, queuesStartSize),
 	}
 }
 
@@ -29,8 +33,8 @@ type DriversQueues struct {
 
 func NewDriversQueues() *DriversQueues {
 	return &DriversQueues{
-		Economy:  make(chan string, 100),
-		Comfort:  make(chan string, 100),
-		Business: make(chan string, 100),
+		Economy:  make(chan string, queuesStartSize),
+		Comfort:  make(chan string, queuesStartSize),
+		Business: make(chan string, queuesStartSize),
 	}
 }

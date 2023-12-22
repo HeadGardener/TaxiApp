@@ -3,9 +3,10 @@ package services
 import (
 	"context"
 	"errors"
-	"github.com/HeadGardener/TaxiApp/order-service/internal/models"
 	"log"
 	"time"
+
+	"github.com/HeadGardener/TaxiApp/order-service/internal/models"
 )
 
 var (
@@ -36,6 +37,7 @@ func NewOrderNotifier(client DriverServiceGRPCClient,
 	}
 }
 
+//nolint:gosimple
 func (n *OrderNotifier) AddUserToQueue(ctx context.Context,
 	userID, orderID, from, to string, taxiType models.TaxiType) error {
 	var err error
@@ -74,6 +76,7 @@ func (n *OrderNotifier) AddUserToQueue(ctx context.Context,
 	return err
 }
 
+//nolint:gosimple
 func (n *OrderNotifier) AddDriverToQueue(ctx context.Context, driverID string, taxiType models.TaxiType) error {
 	var err error
 
@@ -104,6 +107,7 @@ func (n *OrderNotifier) AddDriverToQueue(ctx context.Context, driverID string, t
 	return err
 }
 
+//nolint:gocyclo
 func (n *OrderNotifier) MakeUpOrders() {
 	done := make(chan struct{}, 1)
 	go func() {

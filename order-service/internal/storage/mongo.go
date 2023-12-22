@@ -2,15 +2,20 @@ package storage
 
 import (
 	"context"
+	"time"
+
 	"github.com/HeadGardener/TaxiApp/order-service/internal/config"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
-	"time"
+)
+
+const (
+	connTimeout = 5 * time.Second
 )
 
 func NewMongoCollection(ctx context.Context, conf config.DBConfig) (*mongo.Collection, error) {
-	ctxConn, cancel := context.WithTimeout(ctx, 5*time.Second)
+	ctxConn, cancel := context.WithTimeout(ctx, connTimeout)
 	defer cancel()
 
 	client, err := mongo.Connect(ctxConn, options.Client().ApplyURI(conf.URL))
@@ -18,7 +23,7 @@ func NewMongoCollection(ctx context.Context, conf config.DBConfig) (*mongo.Colle
 		return nil, err
 	}
 
-	ctxPing, cancel := context.WithTimeout(ctx, 5*time.Second)
+	ctxPing, cancel := context.WithTimeout(ctx, connTimeout)
 	defer cancel()
 
 	err = client.Ping(ctxPing, readpref.Primary())

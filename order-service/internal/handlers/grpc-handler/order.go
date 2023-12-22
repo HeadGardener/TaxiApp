@@ -2,13 +2,14 @@ package grpc_handler
 
 import (
 	"context"
+
 	"github.com/HeadGardener/TaxiApp/order-service/internal/models"
 	order_service "github.com/HeadGardener/protos/gen/order"
 )
 
 func (h *ProcessOrderHandler) CreateOrder(ctx context.Context,
 	req *order_service.CreateOrderRequest) (*order_service.CreateOrderResponse, error) {
-	order := models.Order{
+	order := &models.Order{
 		UserID:   req.UserID,
 		From:     req.From,
 		To:       req.To,

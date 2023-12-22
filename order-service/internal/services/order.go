@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"errors"
+
 	"github.com/HeadGardener/TaxiApp/order-service/internal/models"
 	"github.com/google/uuid"
 )
@@ -17,7 +18,7 @@ type UserServiceGRPCClient interface {
 }
 
 type OrderStorage interface {
-	Save(ctx context.Context, order models.Order) (string, error)
+	Save(ctx context.Context, order *models.Order) (string, error)
 	GetByID(ctx context.Context, orderID string) (models.Order, error)
 	AddComment(ctx context.Context, orderID, comment string) error
 	UpdateStatus(ctx context.Context, orderID, status string) error
@@ -36,11 +37,9 @@ func NewOrderService(client UserServiceGRPCClient, orderStorage OrderStorage) *O
 	}
 }
 
-func (s *OrderService) CreateOrder(ctx context.Context, order models.Order) (string, error) {
-	{
-		order.ID = uuid.NewString()
-		order.Status = models.Creating
-	}
+func (s *OrderService) CreateOrder(ctx context.Context, order *models.Order) (string, error) {
+	order.ID = uuid.NewString()
+	order.Status = models.Creating
 
 	return s.orderStorage.Save(ctx, order)
 }
