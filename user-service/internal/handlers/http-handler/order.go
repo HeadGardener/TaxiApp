@@ -3,10 +3,11 @@ package http_handler
 import (
 	"encoding/json"
 	"errors"
-	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
-	"github.com/go-chi/chi/v5"
 	"log"
 	"net/http"
+
+	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
+	"github.com/go-chi/chi/v5"
 )
 
 const (

@@ -4,11 +4,12 @@ import (
 	"database/sql"
 	"encoding/json"
 	"errors"
+	"log"
+	"net/http"
+
 	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
 	services "github.com/HeadGardener/TaxiApp/user-service/internal/services"
 	"github.com/HeadGardener/TaxiApp/user-service/internal/storage"
-	"log"
-	"net/http"
 )
 
 type response struct {

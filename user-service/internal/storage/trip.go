@@ -3,6 +3,7 @@ package storage
 import (
 	"context"
 	"fmt"
+
 	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
 	"github.com/jmoiron/sqlx"
 )

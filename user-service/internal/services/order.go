@@ -3,8 +3,9 @@ package services
 import (
 	"context"
 	"errors"
-	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
 	"time"
+
+	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
 )
 
 var (

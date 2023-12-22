@@ -2,10 +2,11 @@ package grpc_server
 
 import (
 	"fmt"
+	"net"
+
 	"github.com/HeadGardener/TaxiApp/user-service/internal/config"
 	user_service "github.com/HeadGardener/protos/gen/user"
 	"google.golang.org/grpc"
-	"net"
 )
 
 type GRPCServer struct{}

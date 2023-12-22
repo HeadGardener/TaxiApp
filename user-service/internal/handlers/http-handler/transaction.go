@@ -4,9 +4,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
 	"net/http"
 	"strconv"
+
+	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"

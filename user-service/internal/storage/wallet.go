@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+
 	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
 
 	"github.com/jmoiron/sqlx"

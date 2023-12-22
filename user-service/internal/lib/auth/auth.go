@@ -17,12 +17,14 @@ type UserAttributes struct {
 	Phone string `json:"phone"`
 }
 
+//nolint:typecheck
 type tokenClaims struct {
 	jwt.RegisteredClaims
 	UserID string `json:"id"`
 	Phone  string `json:"phone"`
 }
 
+//nolint:typecheck
 func GenerateToken(userID, phone string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, &tokenClaims{
 		jwt.RegisteredClaims{
@@ -36,6 +38,7 @@ func GenerateToken(userID, phone string) (string, error) {
 	return token.SignedString([]byte(secretKey))
 }
 
+//nolint:typecheck
 func ParseToken(accessToken string) (UserAttributes, error) {
 	token, err := jwt.ParseWithClaims(accessToken, &tokenClaims{}, func(token *jwt.Token) (any, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {

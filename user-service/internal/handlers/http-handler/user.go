@@ -4,9 +4,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
 	"net/http"
 	"net/mail"
+
+	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
 )
 
 type updateReq struct {

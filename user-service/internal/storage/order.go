@@ -2,8 +2,9 @@ package storage
 
 import (
 	"errors"
-	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
 	"sync"
+
+	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
 )
 
 var (

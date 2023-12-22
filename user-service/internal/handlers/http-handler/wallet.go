@@ -3,10 +3,11 @@ package http_handler
 import (
 	"encoding/json"
 	"errors"
-	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
 	"net/http"
 	"regexp"
 	"strconv"
+
+	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"

@@ -2,10 +2,11 @@ package http_handler
 
 import (
 	"context"
-	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
-	"github.com/go-chi/chi/v5"
 	"net/http"
 	"time"
+
+	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
+	"github.com/go-chi/chi/v5"
 
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"

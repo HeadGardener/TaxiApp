@@ -4,10 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
 	"net/http"
 	"net/mail"
 	"regexp"
+
+	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
 )
 
 var (

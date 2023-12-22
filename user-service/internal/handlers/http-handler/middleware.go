@@ -4,9 +4,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/HeadGardener/TaxiApp/user-service/internal/lib/auth"
 	"net/http"
 	"strings"
+
+	"github.com/HeadGardener/TaxiApp/user-service/internal/lib/auth"
 )
 
 type UserCtx string
