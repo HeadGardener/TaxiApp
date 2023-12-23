@@ -1,5 +1,5 @@
-github.com/HeadGardener/protos v1.0.1 h1:PpDXVp4FhoXlwQ8lHzFxqL66oEwRFfznXP+K8jSfse8=
-github.com/HeadGardener/protos v1.0.1/go.mod h1:W0l9PfR5FSuBCLqWtQeZkyLNo9E08DblK2+MSw5HQ5c=
+github.com/HeadGardener/protos v1.0.3 h1:Xd2tBwEhkK5eVRjRIJhF6Yr4NFei7Lf6rTvUC7mpkhk=
+github.com/HeadGardener/protos v1.0.3/go.mod h1:W0l9PfR5FSuBCLqWtQeZkyLNo9E08DblK2+MSw5HQ5c=
 github.com/bsm/ginkgo/v2 v2.12.0 h1:Ny8MWAHyOepLGlLKYmXG4IEkioBysk6GpaRTLC8zwWs=
 github.com/bsm/ginkgo/v2 v2.12.0/go.mod h1:SwYbGRRDovPVboqFv0tPTcG1sN61LM1Z4ARdbAV9g4c=
 github.com/bsm/gomega v1.27.10 h1:yeMWxP2pV2fG3FgAODIY8EiRE3dy0aeFYt4l7wh6yKA=
