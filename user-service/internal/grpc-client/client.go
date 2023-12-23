@@ -2,6 +2,7 @@ package grpc_client
 
 import (
 	"context"
+
 	"github.com/HeadGardener/TaxiApp/user-service/internal/models"
 	order_service "github.com/HeadGardener/protos/gen/order"
 	"google.golang.org/grpc"
