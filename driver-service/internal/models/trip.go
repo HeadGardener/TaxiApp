@@ -42,7 +42,7 @@ func (tt TaxiType) String() string {
 	case business:
 		return businessStr
 	default:
-		return "undefined"
+		return undefined
 	}
 }
 

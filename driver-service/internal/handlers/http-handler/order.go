@@ -2,18 +2,21 @@ package http_handler
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
+
+	"github.com/HeadGardener/TaxiApp/driver-service/internal/models"
 )
 
 type processOrderReq struct {
-	OrderID string `json:"order_id"`
-	Status  string `json:"status"`
+	OrderID string                   `json:"order_id"`
+	Status  models.AcceptOrderStatus `json:"status"`
 }
 
 type completeOrderReq struct {
-	OrderID string  `json:"order_id"`
-	Status  string  `json:"status"`
-	Rating  float64 `json:"rating"`
+	OrderID string                     `json:"order_id"`
+	Status  models.CompleteOrderStatus `json:"status"`
+	Rating  float64                    `json:"rating"`
 }
 
 func (h *Handler) getInLine(w http.ResponseWriter, r *http.Request) {
@@ -114,6 +117,10 @@ func (h *Handler) awaitingOrder(w http.ResponseWriter, r *http.Request) {
 }
 
 func (r *processOrderReq) validate() error {
+	if _, ok := models.AcceptOrderStatuses[r.Status]; !ok {
+		return errors.New("invalid AcceptOrder status")
+	}
+
 	return nil
 }
 

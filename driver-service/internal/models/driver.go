@@ -4,10 +4,6 @@ import (
 	"time"
 )
 
-const (
-	ConsumedStatus = "CONSUMED"
-)
-
 type DriverStatus int
 
 const (
@@ -43,7 +39,7 @@ func (ds DriverStatus) String() string {
 	case Disable:
 		return disableStr
 	default:
-		return "undefined"
+		return undefined
 	}
 }
 

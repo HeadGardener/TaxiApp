@@ -44,8 +44,8 @@ type BalanceService interface {
 
 type OrderService interface {
 	GetInLine(ctx context.Context, driverID string, taxiType models.TaxiType) error
-	ProcessOrder(ctx context.Context, driverID, orderID, status string) error
-	Complete(ctx context.Context, driverID, orderID, status string, rating float64) error
+	ProcessOrder(ctx context.Context, driverID, orderID string, status models.AcceptOrderStatus) error
+	Complete(ctx context.Context, driverID, orderID string, status models.CompleteOrderStatus, rating float64) error
 	CurrentOrder(driverID string) (models.Order, error)
 }
 
