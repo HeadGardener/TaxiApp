@@ -11,8 +11,8 @@ type OrderService interface {
 	CreateOrder(ctx context.Context, order *models.Order) (string, error)
 	AddComment(ctx context.Context, orderID, comment string) error
 
-	ProcessOrder(ctx context.Context, orderID, driverID, status string) error
-	CompleteOrder(ctx context.Context, driverID, orderID, status string, rating float64) error
+	ProcessOrder(ctx context.Context, orderID, driverID string, status int32) error
+	CompleteOrder(ctx context.Context, driverID, orderID string, status int32, rating float64) error
 }
 
 type OrderNotifier interface {
