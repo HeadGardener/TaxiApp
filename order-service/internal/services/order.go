@@ -13,15 +13,16 @@ var (
 )
 
 type UserServiceGRPCClient interface {
-	AcceptOrder(ctx context.Context, userID, orderID, driverID, status string) error
-	CompleteOrder(ctx context.Context, userID, orderID, status string) error
+	AcceptOrder(ctx context.Context, userID, orderID, driverID string, status int32) error
+	CompleteOrder(ctx context.Context, userID, orderID string, status int32) error
 }
 
 type OrderStorage interface {
+	GetAll(ctx context.Context) ([]models.Order, error)
 	Save(ctx context.Context, order *models.Order) (string, error)
 	GetByID(ctx context.Context, orderID string) (models.Order, error)
 	AddComment(ctx context.Context, orderID, comment string) error
-	UpdateStatus(ctx context.Context, orderID, status string) error
+	UpdateStatus(ctx context.Context, orderID string, status int32) error
 	UpdateRating(ctx context.Context, orderID string, rating float64) error
 }
 
@@ -37,6 +38,10 @@ func NewOrderService(client UserServiceGRPCClient, orderStorage OrderStorage) *O
 	}
 }
 
+func (s *OrderService) GetAll(ctx context.Context) ([]models.Order, error) {
+	return s.orderStorage.GetAll(ctx)
+}
+
 func (s *OrderService) CreateOrder(ctx context.Context, order *models.Order) (string, error) {
 	order.ID = uuid.NewString()
 	order.Status = models.Creating
@@ -48,7 +53,7 @@ func (s *OrderService) AddComment(ctx context.Context, orderID, comment string) 
 	return s.orderStorage.AddComment(ctx, orderID, comment)
 }
 
-func (s *OrderService) ProcessOrder(ctx context.Context, orderID, driverID, status string) error {
+func (s *OrderService) ProcessOrder(ctx context.Context, orderID, driverID string, status int32) error {
 	order, err := s.orderStorage.GetByID(ctx, orderID)
 	if err != nil {
 		return err
@@ -65,7 +70,8 @@ func (s *OrderService) ProcessOrder(ctx context.Context, orderID, driverID, stat
 	return s.orderStorage.UpdateStatus(ctx, orderID, status)
 }
 
-func (s *OrderService) CompleteOrder(ctx context.Context, driverID, orderID, status string, rating float64) error {
+func (s *OrderService) CompleteOrder(ctx context.Context, driverID, orderID string,
+	status int32, rating float64) error {
 	order, err := s.orderStorage.GetByID(ctx, orderID)
 	if err != nil {
 		return err

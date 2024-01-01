@@ -59,7 +59,7 @@ func (h *ProcessOrderHandler) AddDriver(ctx context.Context,
 
 func (h *ProcessOrderHandler) ProcessOrder(ctx context.Context,
 	req *order_service.ProcessOrderRequest) (*order_service.ProcessOrderResponse, error) {
-	if err := h.orderService.ProcessOrder(ctx, req.OrderID, req.DriverID, req.Status.String()); err != nil {
+	if err := h.orderService.ProcessOrder(ctx, req.OrderID, req.DriverID, int32(req.Status)); err != nil {
 		return nil, err
 	}
 
@@ -73,7 +73,7 @@ func (h *ProcessOrderHandler) CompleteOrder(ctx context.Context,
 	if err := h.orderService.CompleteOrder(ctx,
 		req.OrderID,
 		req.DriverID,
-		req.Status.String(),
+		int32(req.Status),
 		float64(req.Rating)); err != nil {
 		return nil, err
 	}

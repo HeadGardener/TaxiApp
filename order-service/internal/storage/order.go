@@ -12,6 +12,21 @@ type OrderStorage struct {
 	coll *mongo.Collection
 }
 
+func (s *OrderStorage) GetAll(ctx context.Context) ([]models.Order, error) {
+	var orders []models.Order
+
+	cur, err := s.coll.Find(ctx, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if err = cur.Decode(&orders); err != nil {
+		return nil, err
+	}
+
+	return orders, nil
+}
+
 func (s *OrderStorage) Save(ctx context.Context, order *models.Order) (string, error) {
 	_, err := s.coll.InsertOne(ctx, order)
 	if err != nil {
@@ -41,7 +56,7 @@ func (s *OrderStorage) AddComment(ctx context.Context, orderID, comment string) 
 	return nil
 }
 
-func (s *OrderStorage) UpdateStatus(ctx context.Context, orderID, status string) error {
+func (s *OrderStorage) UpdateStatus(ctx context.Context, orderID string, status int32) error {
 	filter := bson.D{{"id", orderID}}
 	update := bson.D{{"$set", bson.D{{"status", status}}}}
 

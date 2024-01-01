@@ -1,29 +1,55 @@
-package http_server
+package http_handler
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 	"time"
 
-	"github.com/HeadGardener/TaxiApp/order-service/internal/config"
+	"github.com/HeadGardener/TaxiApp/order-service/internal/models"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 )
 
-type Server struct {
-	httpServer *http.Server
+const (
+	minute = time.Minute
+)
+
+type OrderService interface {
+	GetAll(ctx context.Context) ([]models.Order, error)
 }
 
-func (s *Server) Run(conf config.ServerConfig, handler http.Handler) error {
-	s.httpServer = &http.Server{
-		Addr:           ":" + conf.Port,
-		Handler:        handler,
-		MaxHeaderBytes: 1 << 20,
-		ReadTimeout:    10 * time.Second,
-		WriteTimeout:   10 * time.Second,
+type Handler struct {
+	orderService OrderService
+}
+
+func NewHandler(orderService OrderService) *Handler {
+	return &Handler{orderService: orderService}
+}
+
+func (h *Handler) InitRoutes() http.Handler {
+	r := chi.NewRouter()
+
+	r.Use(middleware.RequestID)
+	r.Use(middleware.RealIP)
+	r.Use(middleware.Logger)
+	r.Use(middleware.Recoverer)
+	r.Use(middleware.Timeout(minute))
+
+	r.Route("/api", func(r chi.Router) {
+		r.Get("/", h.getAllOrders)
+	})
+
+	return r
+}
+
+func (h *Handler) getAllOrders(w http.ResponseWriter, r *http.Request) {
+	orders, err := h.orderService.GetAll(r.Context())
+	if err != nil {
+		// return error response
+		return
 	}
 
-	return s.httpServer.ListenAndServe()
-}
-
-func (s *Server) Shutdown(ctx context.Context) error {
-	return s.httpServer.Shutdown(ctx)
+	w.WriteHeader(http.StatusOK)
+	_ = json.NewEncoder(w).Encode(orders)
 }
