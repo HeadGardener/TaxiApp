@@ -50,7 +50,6 @@ func main() {
 		stop()
 		log.Fatalf("fail to dial: %v", err)
 	}
-	defer userConn.Close()
 
 	userClient := grpc_client.NewUserServiceClient(userConn)
 
@@ -58,9 +57,9 @@ func main() {
 		grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		stop()
+		userConn.Close()
 		log.Fatalf("fail to dial: %v", err)
 	}
-	defer driverConn.Close()
 
 	driverClient := grpc_client.NewDriverServiceClient(driverConn)
 
@@ -102,6 +101,9 @@ func main() {
 	if err = db.Database().Client().Disconnect(ctx); err != nil {
 		log.Printf("[INFO] db connection forced to shutdown: %e", err)
 	}
+
+	userConn.Close()
+	driverConn.Close()
 
 	log.Println("[INFO] server exiting")
 }
