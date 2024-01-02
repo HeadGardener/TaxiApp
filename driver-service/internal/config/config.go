@@ -13,6 +13,7 @@ type Config struct {
 	DBConfig         DBConfig
 	ServerConfig     ServerConfig
 	GRPCServerConfig GRPCServerConfig
+	GRPCClientConfig GRPCClientConfig
 	RedisConfig      RedisConfig
 }
 
@@ -25,6 +26,10 @@ type ServerConfig struct {
 }
 
 type GRPCServerConfig struct {
+	Port string
+}
+
+type GRPCClientConfig struct {
 	Port string
 }
 
@@ -50,9 +55,14 @@ func Init(path string) (*Config, error) {
 		return nil, errors.New("server port is empty")
 	}
 
-	grpcport := os.Getenv("GRPC_PORT")
-	if dburl == "" {
-		return nil, errors.New("grpc port name is empty")
+	grpcport := os.Getenv("GRPC_SERVER_PORT")
+	if grpcport == "" {
+		return nil, errors.New("grpc server port is empty")
+	}
+
+	grpcclientport := os.Getenv("GRPC_CLIENT_PORT")
+	if grpcclientport == "" {
+		return nil, errors.New("grpc client port is empty")
 	}
 
 	redisAddr := os.Getenv("REDIS_ADDR")
@@ -76,6 +86,9 @@ func Init(path string) (*Config, error) {
 		},
 		GRPCServerConfig: GRPCServerConfig{
 			Port: grpcport,
+		},
+		GRPCClientConfig: GRPCClientConfig{
+			Port: grpcclientport,
 		},
 		RedisConfig: RedisConfig{
 			Addr:     redisAddr,

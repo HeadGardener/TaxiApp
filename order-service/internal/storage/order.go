@@ -12,6 +12,10 @@ type OrderStorage struct {
 	coll *mongo.Collection
 }
 
+func NewOrderStorage(coll *mongo.Collection) *OrderStorage {
+	return &OrderStorage{coll: coll}
+}
+
 func (s *OrderStorage) GetAll(ctx context.Context) ([]models.Order, error) {
 	var orders []models.Order
 

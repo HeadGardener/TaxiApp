@@ -15,9 +15,9 @@ type TransactionStorage interface {
 }
 
 type WalletProvider interface {
-	IsOwner(ctx context.Context, walletID, userID string) error
-	IsFamilyOwner(ctx context.Context, walletID, userID string) error
-	IsMember(ctx context.Context, walletID, userID string) error
+	IsWalletOwner(ctx context.Context, walletID, userID string) error
+	IsFamilyWalletOwner(ctx context.Context, walletID, userID string) error
+	IsFamilyWalletMember(ctx context.Context, walletID, userID string) error
 }
 
 type TransactionService struct {
@@ -44,7 +44,7 @@ func (s *TransactionService) Create(ctx context.Context, money float64) (int, er
 func (s *TransactionService) ViewAll(ctx context.Context, userID, walletID string,
 	walletType models.WalletType) ([]models.Transaction, error) {
 	if walletType == models.Personal {
-		if err := s.walletProvider.IsOwner(ctx, walletID, userID); err != nil {
+		if err := s.walletProvider.IsWalletOwner(ctx, walletID, userID); err != nil {
 			return nil, err
 		}
 
@@ -52,7 +52,7 @@ func (s *TransactionService) ViewAll(ctx context.Context, userID, walletID strin
 	}
 
 	if walletType == models.Family {
-		if err := s.walletProvider.IsFamilyOwner(ctx, walletID, userID); err != nil {
+		if err := s.walletProvider.IsFamilyWalletOwner(ctx, walletID, userID); err != nil {
 			return nil, err
 		}
 

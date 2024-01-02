@@ -6,7 +6,7 @@ import (
 )
 
 type OrderService interface {
-	Add(order models.Order) error
+	Add(order *models.Order) error
 }
 
 type ProcessOrderHandler struct {

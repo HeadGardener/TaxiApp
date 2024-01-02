@@ -18,7 +18,7 @@ func (h *ProcessOrderHandler) ConsumeOrder(_ context.Context,
 		Status:   models.ConsumedStatus,
 	}
 
-	if err := h.orderService.Add(order); err != nil {
+	if err := h.orderService.Add(&order); err != nil {
 		return nil, err
 	}
 

@@ -9,10 +9,11 @@ import (
 )
 
 type Config struct {
-	DBConfig         DBConfig
-	ServerConfig     ServerConfig
-	GRPCServerConfig GRPCServerConfig
-	RedisConfig      RedisConfig
+	DBConfig               DBConfig
+	ServerConfig           ServerConfig
+	GRPCServerConfig       GRPCServerConfig
+	GRPCUserClientConfig   GRPCUserClientConfig
+	GRPCDriverClientConfig GRPCDriverClientConfig
 }
 
 type DBConfig struct {
@@ -29,10 +30,12 @@ type GRPCServerConfig struct {
 	Port string
 }
 
-type RedisConfig struct {
-	Addr     string
-	Password string
-	DB       int
+type GRPCUserClientConfig struct {
+	Port string
+}
+
+type GRPCDriverClientConfig struct {
+	Port string
 }
 
 func Init(path string) (*Config, error) {
@@ -61,9 +64,19 @@ func Init(path string) (*Config, error) {
 		return nil, errors.New("server port is empty")
 	}
 
-	grpcport := os.Getenv("GRPC_PORT")
-	if dburl == "" {
-		return nil, errors.New("grpc port name is empty")
+	grpcport := os.Getenv("GRPC_SERVER_PORT")
+	if grpcport == "" {
+		return nil, errors.New("grpc server port is empty")
+	}
+
+	grpcuserclientport := os.Getenv("GRPC_USER_CLIENT_PORT")
+	if grpcuserclientport == "" {
+		return nil, errors.New("grpc user client port is empty")
+	}
+
+	grpcdriverclientport := os.Getenv("GRPC_DRIVER_CLIENT_PORT")
+	if grpcdriverclientport == "" {
+		return nil, errors.New("grpc driver client port is empty")
 	}
 
 	return &Config{
@@ -77,6 +90,12 @@ func Init(path string) (*Config, error) {
 		},
 		GRPCServerConfig: GRPCServerConfig{
 			Port: grpcport,
+		},
+		GRPCUserClientConfig: GRPCUserClientConfig{
+			Port: grpcuserclientport,
+		},
+		GRPCDriverClientConfig: GRPCDriverClientConfig{
+			Port: grpcdriverclientport,
 		},
 	}, nil
 }

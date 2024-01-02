@@ -3,7 +3,6 @@ module github.com/HeadGardener/TaxiApp/order-service
 go 1.21.0
 
 require (
-	github.com/HeadGardener/protos v1.0.4
 	github.com/go-chi/chi/v5 v5.0.11
 	github.com/google/uuid v1.4.0
 	github.com/joho/godotenv v1.5.1
@@ -12,6 +11,7 @@ require (
 )
 
 require (
+	github.com/HeadGardener/protos v1.0.5 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/klauspost/compress v1.13.6 // indirect

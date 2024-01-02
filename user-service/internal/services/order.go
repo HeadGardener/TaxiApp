@@ -39,11 +39,11 @@ type OrderService struct {
 	tripSaver    TripSaver
 }
 
-func NewOrderService(client GRPCClient, orderStorage OrderStorage, treipSaver TripSaver) *OrderService {
+func NewOrderService(client GRPCClient, orderStorage OrderStorage, tripSaver TripSaver) *OrderService {
 	return &OrderService{
 		client:       client,
 		orderStorage: orderStorage,
-		tripSaver:    treipSaver,
+		tripSaver:    tripSaver,
 	}
 }
 
