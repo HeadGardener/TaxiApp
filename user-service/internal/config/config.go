@@ -45,9 +45,9 @@ func Init(path string) (*Config, error) {
 		return nil, fmt.Errorf("invalid path: %s", path)
 	}
 
-	dburl := os.Getenv("DB_URL")
+	dburl := os.Getenv("DATABASE_URL")
 	if dburl == "" {
-		return nil, errors.New("db name is empty")
+		return nil, errors.New("db url is empty")
 	}
 
 	srvport := os.Getenv("SERVER_PORT")

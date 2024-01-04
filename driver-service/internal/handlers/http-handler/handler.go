@@ -94,17 +94,19 @@ func (h *Handler) InitRoutes() http.Handler {
 			})
 		})
 
-		r.Use(h.identifyDriver)
 		r.Route("/balance", func(r chi.Router) {
+			r.Use(h.identifyDriver)
 			r.Put("/add", h.addBalance)
 			r.Put("/cash-out", h.cashOut)
 		})
 
 		r.Route("/trips", func(r chi.Router) {
+			r.Use(h.identifyDriver)
 			r.Get("/", h.viewTrips)
 		})
 
 		r.Route("/order", func(r chi.Router) {
+			r.Use(h.identifyDriver)
 			r.Post("/", h.getInLine)
 			r.Post("/process", h.processOrder)
 			r.Post("/complete", h.completeOrder)

@@ -65,7 +65,7 @@ func (s *WalletService) Create(ctx context.Context, userID, card string) (string
 		ID:      uuid.NewString(),
 		UserID:  userID,
 		Card:    card,
-		Balance: 0.0,
+		Balance: 0.0001,
 	}
 
 	return s.walletStorage.Create(ctx, wallet)

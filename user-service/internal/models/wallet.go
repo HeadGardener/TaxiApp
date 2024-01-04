@@ -41,7 +41,7 @@ func (wt WalletType) FromString(walletType string) WalletType {
 type Wallet struct {
 	ID      string  `db:"id"`
 	UserID  string  `db:"user_id"`
-	Card    string  `db:"card_number"`
+	Card    string  `db:"card"`
 	Balance float64 `db:"balance"`
 }
 

@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	TokenTTL  = time.Hour
+	TokenTTL  = 24 * time.Hour
 	secretKey = "qazwsxedcrfvtgbyhnujm"
 )
 

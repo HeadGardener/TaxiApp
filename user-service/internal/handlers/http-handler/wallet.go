@@ -16,7 +16,7 @@ import (
 var checkCard = regexp.MustCompile(`^\d{4}-\d{4}-\d{4}-\d{4}$`)
 
 type createWalletReq struct {
-	Card string `json:"card_number"`
+	Card string `json:"card"`
 }
 
 // personal route

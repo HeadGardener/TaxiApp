@@ -61,7 +61,7 @@ type WalletService interface {
 }
 
 type TransactionService interface {
-	Create(ctx context.Context, money float64) (int, error)
+	Create(ctx context.Context, walletID string, money float64) (int, error)
 	ViewAll(ctx context.Context, userID, walletID string, walletType models.WalletType) ([]models.Transaction, error)
 	Confirm(ctx context.Context, walletType models.WalletType, transactionID int) error
 	Cancel(ctx context.Context, walletType models.WalletType, transactionID int, credentials models.Credentials) error
@@ -136,10 +136,10 @@ func (h *Handler) InitRoutes() http.Handler {
 			r.Use(h.identifyUser)
 			r.Route("/personal", func(r chi.Router) {
 				r.Post("/", h.createWallet)
-				r.Get("/{wallet_id}", h.viewWallet)
 				r.Get("/", h.viewWallets)
 
 				r.Route("/{wallet_id}", func(r chi.Router) {
+					r.Get("/", h.viewWallet)
 					r.Put("/balance", h.topUp)
 				})
 			})

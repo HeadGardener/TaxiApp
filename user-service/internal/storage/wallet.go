@@ -28,7 +28,7 @@ func NewWalletStorage(db *sqlx.DB) *WalletStorage {
 func (s *WalletStorage) Create(ctx context.Context, wallet *models.Wallet) (string, error) {
 	var createWalletQuery = fmt.Sprintf(`INSERT INTO %s
     										(id, user_id, card, balance)
-    										VALUES($1$2,$3,$4)`, walletsTable)
+    										VALUES($1,$2,$3,$4)`, walletsTable)
 
 	if _, err := s.db.ExecContext(ctx,
 		createWalletQuery,
@@ -47,7 +47,7 @@ func (s *WalletStorage) GetByID(ctx context.Context, walletID string) (models.Wa
 
 	var wallet models.Wallet
 
-	if err := s.db.QueryRowContext(ctx, getByIDQuery, walletID).Scan(&wallet); err != nil {
+	if err := s.db.GetContext(ctx, &wallet, getByIDQuery, walletID); err != nil {
 		return models.Wallet{}, err
 	}
 
@@ -96,8 +96,8 @@ func (s *WalletStorage) Refill(ctx context.Context, transaction *models.Transact
 	var refillQuery = fmt.Sprintf(`UPDATE %s SET balance=balance+$1 WHERE id=$2`, walletsTable)
 
 	if _, err = tx.ExecContext(ctx, refillQuery, transaction.Money, transaction.WalletID); err != nil {
-		if err = tx.Rollback(); err != nil {
-			return 0, fmt.Errorf("unexpected error: unable to rollback: %w", err)
+		if txErr := tx.Rollback(); txErr != nil {
+			return 0, fmt.Errorf("unexpected error: unable to rollback: %w", txErr)
 		}
 
 		return 0, err
@@ -116,8 +116,8 @@ func (s *WalletStorage) Refill(ctx context.Context, transaction *models.Transact
 		transaction.TransactionType,
 		transaction.TransactionStatus,
 		transaction.Date).Scan(&id); err != nil {
-		if err = tx.Rollback(); err != nil {
-			return 0, fmt.Errorf("unexpected error: unable to rollback: %w", err)
+		if txErr := tx.Rollback(); txErr != nil {
+			return 0, fmt.Errorf("unexpected error: unable to rollback: %w", txErr)
 		}
 
 		return 0, err
@@ -314,7 +314,7 @@ func (s *WalletStorage) IsWalletOwner(ctx context.Context, walletID, userID stri
 
 	var isOwner int
 
-	if err := s.db.SelectContext(ctx, &isOwner, isOwnerQuery, walletID, userID); err != nil {
+	if err := s.db.GetContext(ctx, &isOwner, isOwnerQuery, walletID, userID); err != nil {
 		return err
 	}
 
@@ -332,7 +332,7 @@ func (s *WalletStorage) IsFamilyWalletOwner(ctx context.Context, walletID, userI
 
 	var isOwner int
 
-	if err := s.db.SelectContext(ctx, &isOwner, isFamilyOwnerQuery, walletID, userID); err != nil {
+	if err := s.db.GetContext(ctx, &isOwner, isFamilyOwnerQuery, walletID, userID); err != nil {
 		return err
 	}
 

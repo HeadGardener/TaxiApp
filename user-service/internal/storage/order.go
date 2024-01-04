@@ -23,11 +23,12 @@ type OrderStorage struct {
 func NewOrderStorage() *OrderStorage {
 	return &OrderStorage{
 		orders: make(map[string]*models.UserOrder, orderStorageStartSize),
+		mu:     &sync.Mutex{},
 	}
 }
 
 func (s *OrderStorage) Save(orderID string, order *models.UserOrder) error {
-	s.mu.Unlock()
+	s.mu.Lock()
 	defer s.mu.Unlock()
 
 	s.orders[orderID] = order
@@ -36,7 +37,7 @@ func (s *OrderStorage) Save(orderID string, order *models.UserOrder) error {
 }
 
 func (s *OrderStorage) Get(orderID string) (*models.UserOrder, error) {
-	s.mu.Unlock()
+	s.mu.Lock()
 	defer s.mu.Unlock()
 
 	if _, ok := s.orders[orderID]; !ok {
@@ -47,7 +48,7 @@ func (s *OrderStorage) Get(orderID string) (*models.UserOrder, error) {
 }
 
 func (s *OrderStorage) Update(orderID, status string) error {
-	s.mu.Unlock()
+	s.mu.Lock()
 	defer s.mu.Unlock()
 
 	if _, ok := s.orders[orderID]; !ok {
@@ -60,7 +61,7 @@ func (s *OrderStorage) Update(orderID, status string) error {
 }
 
 func (s *OrderStorage) Delete(orderID string) error {
-	s.mu.Unlock()
+	s.mu.Lock()
 	defer s.mu.Unlock()
 
 	if _, ok := s.orders[orderID]; !ok {

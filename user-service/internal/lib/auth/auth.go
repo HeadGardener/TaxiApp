@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	TokenTTL  = time.Hour               // placeholder
+	TokenTTL  = 24 * time.Hour          // placeholder
 	secretKey = "qazwsxedcrfvtgbyhnujm" // placeholder
 )
 

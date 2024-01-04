@@ -23,11 +23,12 @@ type OrderStorage struct {
 func NewOrderStorage() *OrderStorage {
 	return &OrderStorage{
 		orders: make(map[string]models.Order, orderStorageStartSize),
+		mu:     &sync.Mutex{},
 	}
 }
 
 func (s *OrderStorage) Add(order *models.Order) error {
-	s.mu.Unlock()
+	s.mu.Lock()
 	defer s.mu.Unlock()
 
 	s.orders[order.ID] = *order
@@ -36,7 +37,7 @@ func (s *OrderStorage) Add(order *models.Order) error {
 }
 
 func (s *OrderStorage) GetByDriverID(driverID string) (models.Order, error) {
-	s.mu.Unlock()
+	s.mu.Lock()
 	defer s.mu.Unlock()
 
 	if _, ok := s.orders[driverID]; !ok {
@@ -47,7 +48,7 @@ func (s *OrderStorage) GetByDriverID(driverID string) (models.Order, error) {
 }
 
 func (s *OrderStorage) Delete(driverID string) error {
-	s.mu.Unlock()
+	s.mu.Lock()
 	defer s.mu.Unlock()
 
 	if _, ok := s.orders[driverID]; !ok {

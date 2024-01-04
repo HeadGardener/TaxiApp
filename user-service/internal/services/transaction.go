@@ -32,11 +32,13 @@ func NewTransactionService(transactionStorage TransactionStorage, walletProvider
 	}
 }
 
-func (s *TransactionService) Create(ctx context.Context, money float64) (int, error) {
+func (s *TransactionService) Create(ctx context.Context, walletID string, money float64) (int, error) {
 	transaction, err := models.BuildTransaction(models.Spent, models.Create, money)
 	if err != nil {
 		return 0, err
 	}
+
+	transaction.WalletID = walletID
 
 	return s.transactionStorage.Create(ctx, &transaction)
 }

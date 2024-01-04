@@ -17,7 +17,7 @@ func NewDriverStorage(db *sqlx.DB) *DriverStorage {
 
 func (s *DriverStorage) Create(ctx context.Context, driver *models.Driver) (string, error) {
 	if _, err := s.db.ExecContext(ctx, `INSERT INTO drivers
-    (id, name, surname, phone, email, taxi_type, balance, password_hash, rating, driver_status, registration, is_active)
+    (id, name, surname, phone, email, taxi_type, balance, password_hash, rating, status, registration, is_active)
     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`,
 		driver.ID,
 		driver.Name,
@@ -40,7 +40,7 @@ func (s *DriverStorage) Create(ctx context.Context, driver *models.Driver) (stri
 func (s *DriverStorage) GetByPhone(ctx context.Context, phone string) (*models.Driver, error) {
 	var driver models.Driver
 
-	if err := s.db.SelectContext(ctx, &driver, `SELECT * FROM drivers WHERE phone=$1`, phone); err != nil {
+	if err := s.db.GetContext(ctx, &driver, `SELECT * FROM drivers WHERE phone=$1`, phone); err != nil {
 		return nil, err
 	}
 
@@ -50,7 +50,7 @@ func (s *DriverStorage) GetByPhone(ctx context.Context, phone string) (*models.D
 func (s *DriverStorage) GetByID(ctx context.Context, driverID string) (*models.Driver, error) {
 	var driver models.Driver
 
-	if err := s.db.SelectContext(ctx, &driver, `SELECT * FROM drivers WHERE id=$1`, driverID); err != nil {
+	if err := s.db.GetContext(ctx, &driver, `SELECT * FROM drivers WHERE id=$1`, driverID); err != nil {
 		return nil, err
 	}
 

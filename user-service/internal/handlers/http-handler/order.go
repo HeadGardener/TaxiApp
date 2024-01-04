@@ -15,6 +15,7 @@ const (
 )
 
 type sendOrderReq struct {
+	WalletID string          `json:"wallet_id"`
 	TaxiType models.TaxiType `json:"taxi_type"`
 	From     string          `json:"from"`
 	To       string          `json:"to"`
@@ -55,7 +56,7 @@ func (h *Handler) sendOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	transactionID, err := h.transactionService.Create(r.Context(), moneyPlaceholder)
+	transactionID, err := h.transactionService.Create(r.Context(), orderReq.WalletID, moneyPlaceholder)
 	if err != nil {
 		newErrResponse(w, http.StatusInternalServerError, "failed while preparing transaction", err)
 		return

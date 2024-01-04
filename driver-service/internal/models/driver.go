@@ -1,8 +1,6 @@
 package models
 
-import (
-	"time"
-)
+import "time"
 
 type DriverStatus int
 
@@ -57,7 +55,7 @@ type Driver struct {
 	Balance      float64      `db:"balance"`
 	Password     string       `db:"password_hash"`
 	Rating       float32      `db:"rating"`
-	DriverStatus DriverStatus `db:"driver_status"`
+	DriverStatus DriverStatus `db:"status"`
 	Registration time.Time    `db:"registration"`
 	IsActive     bool         `db:"is_active"`
 }
